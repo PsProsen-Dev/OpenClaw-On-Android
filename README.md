@@ -18,9 +18,6 @@
     <a href="https://github.com/PsProsen-Dev/OpenClaw-On-Android/discussions">
       <img src="https://img.shields.io/github/discussions/PsProsen-Dev/OpenClaw-On-Android" alt="Discussions">
     </a>
-    <a href="https://docs.openclaw.ai">
-      <img src="https://img.shields.io/badge/Docs-Mintlify-0f172a?logo=mintlify" alt="Docs">
-    </a>
   </p>
 
   <p align="center">
@@ -79,7 +76,7 @@ The OCA wrapper bridges the Android operating system and the Linux toolchain:
 
 ## 📖 Documentation
 
-All official documentation is deployed using [Mintlify](https://mintlify.com) for a first-class reading experience.
+All official documentation is available below for a first-class reading experience.
 
 👉 **[Read the Full OCA Docs](docs/)**
 
