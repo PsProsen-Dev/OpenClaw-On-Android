@@ -102,22 +102,8 @@ if [ -f "$_OCA_COMPAT" ]; then
         *) export NODE_OPTIONS="${NODE_OPTIONS:+$NODE_OPTIONS }-r $_OCA_COMPAT" ;;
     esac
 fi
-# glibc ld.so misparses leading --options as its own flags.
-_LEADING_OPTS=""
-_COUNT=0
-for _arg in "$@"; do
-    case "$_arg" in --*) _COUNT=$((_COUNT + 1)) ;; *) break ;; esac
-done
-if [ $_COUNT -gt 0 ] && [ $_COUNT -lt $# ]; then
-    while [ $# -gt 0 ]; do
-        case "$1" in
-            --*) _LEADING_OPTS="${_LEADING_OPTS:+$_LEADING_OPTS }$1"; shift ;;
-            *) break ;;
-        esac
-    done
-    export NODE_OPTIONS="${NODE_OPTIONS:+$NODE_OPTIONS }$_LEADING_OPTS"
-fi
-exec "$PREFIX/glibc/lib/ld-linux-aarch64.so.1" "$(dirname "$0")/node.real" "$@"
+# Use grun for robust glibc execution (handles ld.so argument misparsing)
+exec "$PREFIX/bin/grun" "$(dirname "$0")/node.real" "$@"
 WRAPPER
 chmod +x "$NODE_DIR/bin/node"
 echo -e "${GREEN}[OK]${NC}   node wrapper created"
