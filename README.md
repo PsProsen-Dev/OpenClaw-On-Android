@@ -36,9 +36,7 @@
 
 ## 🌟 The Vision
 
-Your old Android phone? It's a powerful ARM server waiting to happen. OCA seamlessly installs the **OpenClaw** AI ecosystem directly onto your device via Termux. Powered by **Google Antigravity**, this completely bypasses sluggish Linux distributions (like Ubuntu on Proot), running natively with full `glibc` compatibility instead of Android's default Bionic libraries.
-
-> **Watch in Action**: [🚀 OpenClaw on Android Demo (YouTube)](https://youtu.be/FB6HO7CZHWw)
+Your old Android phone? It's a powerful ARM server waiting to happen. OCA seamlessly installs the **OpenClaw** AI ecosystem directly onto your device via Termux. This completely bypasses sluggish Linux distributions (like Ubuntu on Proot), running natively with full `glibc` compatibility instead of Android's default Bionic libraries.
 
 ---
 
@@ -94,13 +92,13 @@ If your device crashes with `[Process completed (signal 9)]`, Android's aggressi
 
 ---
 
-## 📰 Press & Antigravity Blogs
+## 📰 Press & Blogs
 
-OCA has been developed and showcased alongside cutting-edge experiments using Google's Antigravity AI frameworks:
+OCA has been developed and showcased alongside cutting-edge experiments:
 
-1. 🍌 **[Nano Banana Pro in Google Antigravity](https://antigravity.google/blog/nano-banana-pro-in-google-antigravity)**
+1. 🍌 **[Nano Banana Pro](https://antigravity.google/blog/nano-banana-pro-in-google-antigravity)**
 2. 🚀 **[Introducing Google Antigravity](https://antigravity.google/blog/introducing-google-antigravity)**
-3. 🧠 **[Gemini 3.1 Pro in Google Antigravity](https://antigravity.google/blog/gemini-3-1-pro-in-google-antigravity)**
+3. 🧠 **[Gemini 3.1 Pro](https://antigravity.google/blog/gemini-3-1-pro-in-google-antigravity)**
 
 ---
 
