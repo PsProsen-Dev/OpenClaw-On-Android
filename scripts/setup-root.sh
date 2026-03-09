@@ -3,6 +3,8 @@
 set -uo pipefail
 
 GREEN='\033[0;32m'; YELLOW='\033[1;33m'; CYAN='\033[0;36m'; RED='\033[0;31m'; NC='\033[0m'
+PREFIX="${PREFIX:-/data/data/com.termux/files/usr}"
+
 log_ok()   { echo -e "${GREEN}[OK]${NC}   $1"; }
 log_warn() { echo -e "${YELLOW}[WARN]${NC} $1"; }
 log_info() { echo -e "${CYAN}[INFO]${NC} $1"; }

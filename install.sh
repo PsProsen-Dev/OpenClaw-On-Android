@@ -127,9 +127,9 @@ step 7 "Install Optional Tools & Features (L3)"
 [ "$INSTALL_OPENCODE" = true ] && bash "$SCRIPT_DIR/scripts/install-opencode.sh" install || true
 
 # ── AI CLI tools ──
-[ "$INSTALL_CLAUDE_CODE" = true ] && npm install -g @anthropic-ai/claude-code || true
-[ "$INSTALL_GEMINI_CLI" = true ] && npm install -g @google/gemini-cli || true
-[ "$INSTALL_CODEX_CLI" = true ] && npm install -g @openai/codex || true
+[ "$INSTALL_CLAUDE_CODE" = true ] && npm install -g @anthropic-ai/claude-code --ignore-scripts || true
+[ "$INSTALL_GEMINI_CLI" = true ] && npm install -g @google/gemini-cli --ignore-scripts || true
+[ "$INSTALL_CODEX_CLI" = true ] && npm install -g @openai/codex --ignore-scripts || true
 [ "$INSTALL_QWEN_CODE" = true ] && npm install -g @qwen-code/qwen-code@latest --ignore-scripts || true
 
 # ── SSH server ──
