@@ -1,38 +1,136 @@
 ---
 title: "Troubleshooting"
-description: "Resolving common Android/Termux environment issues."
+description: "Common errors and fixes for OCA on Termux + Android."
 ---
 
-Here are the most common issues you might face while running OpenClaw on Android, and how to fix them.
+## Installation Errors
 
-## 1. Process completed (signal 9)
-This is the most infamous issue on Android 12 and later. Android's **Phantom Process Killer** forcefully kills child processes (like node servers or compilation scripts) to aggressively save battery.
+<AccordionGroup>
 
-### How to Fix
-You must disable the phantom process killer via ADB. Connect your device to a PC with platform-tools installed:
+<Accordion title="EAI_AGAIN — DNS resolution failed" icon="wifi">
+**Error**: `npm ERR! code ENOTFOUND` or `getaddrinfo EAI_AGAIN registry.npmjs.org`
 
+**Cause**: glibc DNS resolver can't find `/etc/resolv.conf` (doesn't exist in Android 12+).
+
+**Fix**:
+```bash
+mkdir -p $PREFIX/glibc/etc
+printf 'nameserver 8.8.8.8\nnameserver 1.1.1.1\n' > $PREFIX/glibc/etc/resolv.conf
+```
+</Accordion>
+
+<Accordion title="[Process completed (signal 9)]" icon="skull">
+**Cause**: Android 12+ Phantom Process Killer terminated Termux.
+
+**Fix**: See the [Phantom Process Killer guide](/docs/phantom-process-killer).
+
+Quick fix (from PC with ADB):
 ```bash
 adb shell "/system/bin/device_config put activity_manager max_phantom_processes 2147483647"
-adb shell "/system/bin/device_config set_sync_disabled_for_tests persistent"
 ```
-*Note: This does not require root, only USB Debugging.*
+</Accordion>
 
-## 2. Termux Gets Killed in the Background
-Make sure Android battery optimization is completely disabled for Termux.
-- Go to Android Settings -> Apps -> Termux -> Battery.
-- Set to **Unrestricted**.
-- Additionally, ensure you hold a continuous wake-lock inside Termux by pulling down the Termux notification and clicking **Acquire wakelock**.
-
-## 3. Node.js Segmentation fault or Bad system call
-This usually happens if the `glibc-compat` wrapper fails or your device architecture (non-aarch64/arm) isn't fully supported by the Node.js build. 
-
-**Fix:** Ensure you are using a 64-bit ARM device. Re-run `oca --update` to fetch the latest bionic/glibc shims.
-
-## 4. SSH Server Refused
-By default, the Termux SSH server runs on **port 8022**, NOT port 22.
-Ensure you are connecting correctly from your PC:
+<Accordion title="node: not found / command not found" icon="circle-exclamation">
+**Fix**:
 ```bash
-ssh <username>@<device-ip-address> -p 8022
+source ~/.bashrc
+which node && node --version
 ```
 
-For more help, [join our GitHub Discussions!](https://github.com/PsProsen-Dev/OpenClaw-On-Android/discussions)
+If still failing:
+```bash
+export PATH="$HOME/.oca/node/bin:$PREFIX/bin:$PATH"
+```
+</Accordion>
+
+<Accordion title="npm ERR! code EACCES / permission denied" icon="lock">
+**Fix**:
+```bash
+npm config set prefix "$HOME/.oca/node"
+```
+</Accordion>
+
+<Accordion title="glibc dynamic linker not found" icon="link">
+**Fix**:
+```bash
+pkg install glibc-runner
+bash ~/.oca/scripts/install-glibc.sh
+```
+</Accordion>
+
+<Accordion title="node-pty build failed / @lvce-editor/ripgrep unrecognized platform" icon="hammer">
+**Fix**: Always install Qwen Code with `--ignore-scripts`:
+```bash
+npm install -g @qwen-code/qwen-code@latest --ignore-scripts
+```
+</Accordion>
+
+<Accordion title="openclaw update hangs for 20+ minutes" icon="clock">
+`openclaw update` builds native modules from source — 5–15 mins is normal on a mid-range phone. Only cancel after 20+ minutes and check logs:
+```bash
+cat ~/.openclaw/logs/update.log | tail -30
+```
+</Accordion>
+
+</AccordionGroup>
+
+---
+
+## Runtime Errors
+
+<AccordionGroup>
+
+<Accordion title="OpenClaw gateway won't start" icon="power-off">
+```bash
+openclaw start --verbose
+cat ~/.openclaw/logs/gateway.log | tail -50
+```
+
+Port conflict check:
+```bash
+lsof -i :18789
+```
+</Accordion>
+
+<Accordion title="SSH connection refused" icon="terminal">
+```bash
+sshd
+pgrep sshd && echo "running"
+```
+</Accordion>
+
+<Accordion title="os.cpus() crash / V8 engine panic" icon="microchip">
+```bash
+# Verify NODE_OPTIONS:
+echo $NODE_OPTIONS
+# Must include: -r ~/.oca/patches/glibc-compat.js
+
+source ~/.bashrc
+```
+</Accordion>
+
+</AccordionGroup>
+
+---
+
+## Diagnostics
+
+```bash
+oca --status
+
+# Manual checks:
+node --version
+node -e "console.log(process.platform)"  # Should print: linux
+npm --version
+openclaw --version
+cat $PREFIX/glibc/etc/resolv.conf
+echo $PATH | tr ':' '\n'
+```
+
+---
+
+## Still stuck?
+
+- [GitHub Issues](https://github.com/PsProsen-Dev/OpenClaw-On-Android/issues)
+- [GitHub Discussions](https://github.com/PsProsen-Dev/OpenClaw-On-Android/discussions)
+- [r/termux](https://www.reddit.com/r/termux/)
