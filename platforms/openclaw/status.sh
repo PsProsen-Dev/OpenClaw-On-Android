@@ -97,7 +97,7 @@ fi
 
 echo ""
 echo -e "${BOLD}AI CLI Tools${NC}"
-for tool in "claude:Claude Code" "gemini:Gemini CLI" "codex:Codex CLI" "qwen-code:Qwen Code"; do
+for tool in "claude:Claude Code" "gemini:Gemini CLI" "codex:Codex CLI" "qwen:Qwen Code"; do
     cmd="${tool%%:*}"
     label="${tool##*:}"
     if command -v "$cmd" &>/dev/null; then

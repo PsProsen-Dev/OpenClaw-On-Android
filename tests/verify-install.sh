@@ -105,7 +105,7 @@ if command -v code-server &>/dev/null; then
 fi
 
 command -v opencode &>/dev/null && check_pass "opencode command available"
-command -v qwen-code &>/dev/null && check_pass "qwen-code command available"
+command -v qwen &>/dev/null && check_pass "qwen command available"
 
 # Bashrc check
 if grep -qF "OCA" "$HOME/.bashrc" 2>/dev/null; then
