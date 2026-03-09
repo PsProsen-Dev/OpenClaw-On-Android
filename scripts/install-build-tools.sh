@@ -15,6 +15,7 @@ PACKAGES=(
     cmake
     clang
     binutils
+    build-essential
 )
 
 echo "Installing packages: ${PACKAGES[*]}"
