@@ -1,0 +1,127 @@
+/**
+ * glibc-compat.js - Minimal compatibility shim for glibc Node.js on Android
+ *
+ * This is the successor to bionic-compat.js, drastically reduced for glibc.
+ *
+ * What's NOT needed anymore (glibc handles these):
+ * - process.platform override (glibc Node.js reports 'linux' natively)
+ * - renameat2 / spawn.h stubs (glibc includes them)
+ * - CXXFLAGS / GYP_DEFINES overrides (glibc is standard Linux)
+ *
+ * What's still needed (kernel/Android-level restrictions, not libc):
+ * - os.cpus() fallback: SELinux blocks /proc/stat on Android 8+
+ * - os.networkInterfaces() safety: EACCES on some Android configurations
+ * - /bin/sh path shim: Android 7-8 lacks /bin/sh (Android 9+ has it)
+ *
+ * Loaded via node wrapper script: node --require <path>/glibc-compat.js
+ */
+
+'use strict';
+
+const os = require('os');
+const fs = require('fs');
+const path = require('path');
+
+// ─── process.execPath fix ────────────────────────────────────
+// When node runs via grun (ld.so node.real), process.execPath points to
+// ld.so instead of the node wrapper. Apps that spawn child node processes
+// using process.execPath (e.g., openclaw) will call ld.so directly,
+// bypassing the wrapper's LD_PRELOAD unset and compat loading.
+// Fix: point process.execPath to the wrapper script.
+
+const _wrapperPath = path.join(
+  process.env.HOME || '/data/data/com.termux/files/home',
+  '.openclaw-pocket-server', 'node', 'bin', 'node'
+);
+try {
+  if (fs.existsSync(_wrapperPath)) {
+    Object.defineProperty(process, 'execPath', {
+      value: _wrapperPath,
+      writable: true,
+      configurable: true,
+    });
+  }
+} catch {}
+
+
+// ─── os.cpus() fallback ─────────────────────────────────────
+// Android 8+ (API 26+) blocks /proc/stat via SELinux + hidepid=2.
+// libuv reads /proc/stat for CPU info → returns empty array.
+// Tools using os.cpus().length for parallelism (e.g., make -j) break with 0.
+
+const _originalCpus = os.cpus;
+
+os.cpus = function cpus() {
+  const result = _originalCpus.call(os);
+  if (result.length > 0) {
+    return result;
+  }
+  // Return a single fake CPU entry so .length is at least 1
+  return [{ model: 'unknown', speed: 0, times: { user: 0, nice: 0, sys: 0, idle: 0, irq: 0 } }];
+};
+
+// ─── os.networkInterfaces() safety ──────────────────────────
+// Some Android configurations throw EACCES when reading network
+// interface information. Wrap with try-catch to prevent crashes.
+
+const _originalNetworkInterfaces = os.networkInterfaces;
+
+os.networkInterfaces = function networkInterfaces() {
+  try {
+    return _originalNetworkInterfaces.call(os);
+  } catch {
+    // Return minimal loopback interface
+    return {
+      lo: [
+        {
+          address: '127.0.0.1',
+          netmask: '255.0.0.0',
+          family: 'IPv4',
+          mac: '00:00:00:00:00:00',
+          internal: true,
+          cidr: '127.0.0.1/8',
+        },
+      ],
+    };
+  }
+};
+
+// ─── /bin/sh path shim (Android 7-8 only) ───────────────────
+// Android 9+ (API 28+) has /bin → /system/bin symlink, so /bin/sh exists.
+// Android 7-8 lacks /bin/sh entirely.
+// Node.js child_process hardcodes /bin/sh as the default shell on Linux.
+// With glibc (platform='linux'), LD_PRELOAD is unset, so libtermux-exec.so
+// path translation is not available.
+//
+// This shim only activates if /bin/sh doesn't exist.
+
+if (!fs.existsSync('/bin/sh')) {
+  const child_process = require('child_process');
+  const termuxSh = (process.env.PREFIX || '/data/data/com.termux/files/usr') + '/bin/sh';
+
+  if (fs.existsSync(termuxSh)) {
+    // Override exec/execSync to use Termux shell
+    const _originalExec = child_process.exec;
+    const _originalExecSync = child_process.execSync;
+
+    child_process.exec = function exec(command, options, callback) {
+      if (typeof options === 'function') {
+        callback = options;
+        options = {};
+      }
+      options = options || {};
+      if (!options.shell) {
+        options.shell = termuxSh;
+      }
+      return _originalExec.call(child_process, command, options, callback);
+    };
+
+    child_process.execSync = function execSync(command, options) {
+      options = options || {};
+      if (!options.shell) {
+        options.shell = termuxSh;
+      }
+      return _originalExecSync.call(child_process, command, options);
+    };
+  }
+}

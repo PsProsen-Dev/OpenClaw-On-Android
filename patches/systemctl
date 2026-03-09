@@ -1,0 +1,30 @@
+#!/data/data/com.termux/files/usr/bin/bash
+# systemctl stub for Termux (no systemd)
+# Intercepts common systemctl commands for OpenClaw compatibility
+
+case "${1:-}" in
+  restart|reload)
+    shift
+    if [ "${1:-}" = "openclaw-gateway" ] || [ "${1:-}" = "openclaw-gateway.service" ]; then
+      openclaw gateway config.patch 2>/dev/null || openclaw gateway 2>/dev/null &
+    fi
+    ;;
+  start)
+    shift
+    if [ "${1:-}" = "openclaw-gateway" ] || [ "${1:-}" = "openclaw-gateway.service" ]; then
+      openclaw gateway 2>/dev/null &
+    fi
+    ;;
+  stop)
+    shift
+    pkill -f "openclaw gateway" 2>/dev/null || true
+    ;;
+  status|is-active|is-enabled|enable|disable|daemon-reload)
+    # Silently succeed
+    exit 0
+    ;;
+  *)
+    echo "systemctl stub: command '$*' not supported in Termux"
+    exit 0
+    ;;
+esac
