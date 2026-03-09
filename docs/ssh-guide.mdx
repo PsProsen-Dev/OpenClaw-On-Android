@@ -1,0 +1,37 @@
+---
+title: "SSH Setup"
+description: "Manage your Termux instance remotely."
+---
+
+A crucial part of turning an Android device into a 24/7 server is managing it remotely from your PC. OCA offers an automatic SSH setup during installation, but here is how to manage it.
+
+## Connecting to Your Device
+When you finish the setup, Termux will output your IP address and Username.
+
+On your PC, open a terminal (PowerShell, CMD, or Bash) and type:
+```bash
+ssh <username>@<device-ip> -p 8022
+```
+*Port **8022** is required as Termux runs without root restrictions on high ports.*
+
+## Missing SSH? How to Re-install
+If you skipped SSH during the OCA setup, you can manually install the OpenSSH server:
+```bash
+pkg install openssh
+passwd
+```
+(Set a new password. The characters will not show up while typing—this is normal).
+
+Start the server:
+```bash
+sshd
+```
+
+## Finding Your Details
+- **Username:** Run `whoami` in Termux.
+- **IP Address:** Run `ifconfig | grep "inet " | grep -v 127.0.0.1`
+
+## (Optional) Key-Based Auth
+For stronger security, disable password login and use SSH keys:
+1. Generate a key on your PC: `ssh-keygen -t rsa -b 4096`.
+2. Copy it to Android: `ssh-copy-id -p 8022 <username>@<device-ip>`.

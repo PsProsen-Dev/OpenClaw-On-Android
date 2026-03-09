@@ -1,0 +1,38 @@
+---
+title: "Troubleshooting"
+description: "Resolving common Android/Termux environment issues."
+---
+
+Here are the most common issues you might face while running OpenClaw on Android, and how to fix them.
+
+## 1. Process completed (signal 9)
+This is the most infamous issue on Android 12 and later. Android's **Phantom Process Killer** forcefully kills child processes (like node servers or compilation scripts) to aggressively save battery.
+
+### How to Fix
+You must disable the phantom process killer via ADB. Connect your device to a PC with platform-tools installed:
+
+```bash
+adb shell "/system/bin/device_config put activity_manager max_phantom_processes 2147483647"
+adb shell "/system/bin/device_config set_sync_disabled_for_tests persistent"
+```
+*Note: This does not require root, only USB Debugging.*
+
+## 2. Termux Gets Killed in the Background
+Make sure Android battery optimization is completely disabled for Termux.
+- Go to Android Settings -> Apps -> Termux -> Battery.
+- Set to **Unrestricted**.
+- Additionally, ensure you hold a continuous wake-lock inside Termux by pulling down the Termux notification and clicking **Acquire wakelock**.
+
+## 3. Node.js Segmentation fault or Bad system call
+This usually happens if the `glibc-compat` wrapper fails or your device architecture (non-aarch64/arm) isn't fully supported by the Node.js build. 
+
+**Fix:** Ensure you are using a 64-bit ARM device. Re-run `oca --update` to fetch the latest bionic/glibc shims.
+
+## 4. SSH Server Refused
+By default, the Termux SSH server runs on **port 8022**, NOT port 22.
+Ensure you are connecting correctly from your PC:
+```bash
+ssh <username>@<device-ip-address> -p 8022
+```
+
+For more help, [join our GitHub Discussions!](https://github.com/PsProsen-Dev/OpenClaw-On-Android/discussions)

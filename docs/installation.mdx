@@ -1,0 +1,37 @@
+---
+title: "Installation"
+description: "Setting up OpenClaw on Android in under 2 minutes."
+---
+
+Installing **OpenClaw on Android (OCA)** is designed to be a one-command process that handles all dependencies automatically.
+
+## Prerequisites
+- **Termux app** installed via [F-Droid](https://f-droid.org/en/packages/com.termux/). Do **NOT** download Termux from the Google Play Store (it is outdated and deprecated).
+- Minimum **Android 8.0+** (Android 10+ recommended).
+- At least **500MB** of free storage space.
+
+## Step 1: Run the Official Installer
+
+Open Termux and run the following command:
+
+```bash
+curl -sL https://raw.githubusercontent.com/PsProsen-Dev/OpenClaw-On-Android/master/bootstrap.sh | bash
+```
+
+## Step 2: Follow Prompts
+The installer will prompt you for several optional but highly recommended features:
+- **Root Support:** Wraps root commands safely so OpenClaw can use them without full system access.
+- **SSH Server:** Sets up OpenSSH so you can remotely access your Termux environment from a PC.
+- **Termux:Boot:** Ensures OCA AI servers start automatically when your phone reboots.
+- **Termux:API:** Exposes device sensors (battery, location, camera) to AI agents.
+- **Qwen Code CLI:** A powerful CLI-first coding assistant tool optimized for OpenClaw.
+
+## Step 3: Verify Installation
+Once the script finishes, type the following to activate changes and check the status:
+
+```bash
+source ~/.bashrc
+oca --status
+```
+
+If you see `Node.js v24.14.0` and the correct installation paths, you are good to go!

@@ -1,0 +1,33 @@
+---
+title: "Configuration"
+description: "Manage and configure your OCA environment."
+---
+
+The OCA environment is highly isolated inside Termux to prevent interference with your Android device.
+
+## Core Directories
+- **`~/.oca`**: Main installation directory.
+- **`~/.oca/node`**: Target Node.js v24 environment patched with glibc-compat.
+- **`~/.oca/bin`**: Binaries and executable scripts for `oca`.
+
+## Managing the OCA Service
+OCA installs a CLI tool (`oca`) that allows you to manage the environment easily from anywhere inside Termux.
+
+### Check Status
+Checks whether Node.js, `npm`, glibc wrapper, and default applications are installed correctly.
+```bash
+oca --status
+```
+
+### Update the Setup
+If there is a new script or Node patch available upstream, run this to update your environment automatically.
+```bash
+oca --update
+```
+
+### Advanced: Custom Environment Variables
+OCA automatically manages its path priorities inside your `.bashrc`. It prepends the glibc-wrapper environment variables (`OCA_GLIBC=1`) so that standard node commands work natively. 
+If you need custom variables (e.g., API keys for OpenAI/Anthropic), you can add them at the bottom of:
+```bash 
+nano ~/.bashrc
+```
