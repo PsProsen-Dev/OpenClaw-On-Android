@@ -1,4 +1,7 @@
-# Disable Phantom Process Killer (Android 12+)
+---
+title: "Disable Phantom Process"
+description: "Fix signal 9 crashes on Android 12+"
+---
 
 Android 12 and above includes a feature called **Phantom Process Killer** that automatically terminates background processes. This can cause Termux processes like `openclaw gateway`, `sshd`, and `ttyd` to be killed without warning.
 
@@ -23,7 +26,7 @@ Pull down the notification bar and find the Termux notification. Tap **Acquire w
 
 Once activated, the notification will show **"wake lock held"** and the button changes to **Release wakelock**.
 
-> Wake lock alone is not enough to prevent Phantom Process Killer. Continue with the steps below.
+<Note>Wake lock alone is not enough to prevent Phantom Process Killer. Continue with the steps below.</Note>
 
 ## Step 2: Enable Wireless Debugging
 
@@ -39,7 +42,7 @@ In Termux, install `android-tools`:
 pkg install -y android-tools
 ```
 
-> If you installed OpenClaw Pocket Server, `android-tools` is already included.
+<Note>If you installed OpenClaw Pocket Server, `android-tools` is already included.</Note>
 
 ## Step 4: Pair with ADB
 
@@ -78,7 +81,7 @@ adb connect localhost:35541
 
 You should see `connected to localhost:35541`.
 
-> The pairing port and connection port are different. Use the port shown on the Wireless debugging main screen for `adb connect`.
+<Warning>The pairing port and connection port are different. Use the port shown on the Wireless debugging main screen for `adb connect`.</Warning>
 
 ## Step 6: Disable Phantom Process Killer
 
@@ -102,7 +105,3 @@ If the output is `false`, Phantom Process Killer has been successfully disabled.
 - You do **not** need to keep Wireless debugging enabled after completing these steps. You can turn it off
 - This does not affect normal app behavior — it only prevents Android from killing background processes in Termux
 - If you factory reset your phone, you will need to repeat this process
-
-## Further Reading
-
-Some manufacturers (Samsung, Xiaomi, Huawei, etc.) apply additional aggressive battery optimization that can kill background apps. If you still experience process termination after disabling Phantom Process Killer, check [dontkillmyapp.com](https://dontkillmyapp.com) for device-specific guides.
