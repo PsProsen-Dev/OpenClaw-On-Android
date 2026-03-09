@@ -131,10 +131,10 @@ step 7 "Install Optional Tools & Features (L3)"
 # we also pre-install node-gyp-build globally to prevent 'command not found'.
 npm install -g node-gyp node-gyp-build --silent || true
 
-[ "$INSTALL_CLAUDE_CODE" = true ] && npm install -g @anthropic-ai/claude-code --ignore-scripts || true
-[ "$INSTALL_GEMINI_CLI" = true ] && npm install -g @google/gemini-cli --ignore-scripts || true
-[ "$INSTALL_CODEX_CLI" = true ] && npm install -g @openai/codex --ignore-scripts || true
-[ "$INSTALL_QWEN_CODE" = true ] && npm install -g @qwen-code/qwen-code@latest --ignore-scripts || true
+[ "$INSTALL_CLAUDE_CODE" = true ] && npm install -g @anthropic-ai/claude-code --ignore-scripts --no-audit --no-fund --loglevel=error || true
+[ "$INSTALL_GEMINI_CLI" = true ] && npm install -g @google/gemini-cli --ignore-scripts --no-audit --no-fund --loglevel=error || true
+[ "$INSTALL_CODEX_CLI" = true ] && npm install -g @openai/codex --ignore-scripts --no-audit --no-fund --loglevel=error || true
+[ "$INSTALL_QWEN_CODE" = true ] && npm install -g @qwen-code/qwen-code@latest --ignore-scripts --no-audit --no-fund --loglevel=error || true
 
 # ── SSH server ──
 [ "$INSTALL_SSH" = true ] && bash "$SCRIPT_DIR/scripts/setup-ssh.sh" || true

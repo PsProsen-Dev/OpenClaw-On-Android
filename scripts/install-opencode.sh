@@ -9,6 +9,7 @@ echo "=== Installing OpenCode CLI ==="
 
 # OpenCode is provided by @mariozechner/pi-coding-agent
 # We install it globally via our glibc-node npm
-npm install -g @mariozechner/pi-coding-agent --ignore-scripts
+echo "Fetching pi-coding-agent packages..."
+npm install -g @mariozechner/pi-coding-agent --ignore-scripts --no-audit --no-fund --loglevel=error
 
 echo -e "${GREEN}[OK]${NC} OpenCode installed."

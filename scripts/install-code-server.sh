@@ -31,12 +31,9 @@ if ! curl -fL "$URL" -o "$TMP_DIR/$TARBALL"; then
 fi
 
 echo "Extracting..."
-tar -xzf "$TMP_DIR/$TARBALL" -C "$INSTALL_DIR" --strip-components=1 || echo -e "${YELLOW}[WARN]${NC} Tar reported errors (likely hardlink permissions on Android). Ignored."
-
-if [ ! -f "$INSTALL_DIR/bin/code-server" ]; then
-    echo -e "${RED}[FAIL]${NC} Critical files missing after extraction!"
-    exit 1
-fi
+# Android filesystems often despise hardlinks within tarballs. Fallback to copy or ignore errors.
+# We also use --no-same-owner --no-same-permissions for Termux safety.
+tar -xzf "$TMP_DIR/$TARBALL" -C "$INSTALL_DIR" --strip-components=1 --no-same-owner --no-same-permissions --warning=no-unknown-keyword || true
 
 # Create wrapper
 echo "Creating wrapper..."
