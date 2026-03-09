@@ -1,101 +1,123 @@
-<p align="center">
-  <img src="docs/images/banner.png" alt="OCA Banner" />
-</p>
-<h1 align="center">OpenClaw on Android (OCA)</h1>
+<div align="center">
+  <img src="docs/images/banner.png" alt="OCA Banner" width="100%" style="border-radius: 10px;" />
 
-<p align="center">
-  <b>Turn any Android phone into a 24/7 AI server — one command, zero hassle.</b><br/>
-  No proot, no Ubuntu, pure Termux.
-</p>
+  <h1 align="center">OpenClaw on Android (OCA)</h1>
 
-<p align="center">
-  <a href="https://github.com/PsProsen-Dev/OpenClaw-On-Android/releases">
-    <img src="https://img.shields.io/github/v/release/PsProsen-Dev/OpenClaw-On-Android?color=blue&label=latest" alt="Releases">
-  </a>
-  <a href="https://github.com/PsProsen-Dev/OpenClaw-On-Android/blob/main/LICENSE">
-    <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License">
-  </a>
-  <a href="https://github.com/PsProsen-Dev/OpenClaw-On-Android/discussions">
-    <img src="https://img.shields.io/github/discussions/PsProsen-Dev/OpenClaw-On-Android" alt="Discussions">
-  </a>
-</p>
+  <p align="center">
+    <b>Turn any Android phone into a 24/7 AI server — one command, zero hassle.</b><br/>
+    Native performance via Termux & glibc without Proot overhead.
+  </p>
 
----
+  <p align="center">
+    <a href="https://github.com/PsProsen-Dev/OpenClaw-On-Android/releases">
+      <img src="https://img.shields.io/github/v/release/PsProsen-Dev/OpenClaw-On-Android?color=blue&label=latest" alt="Releases">
+    </a>
+    <a href="https://github.com/PsProsen-Dev/OpenClaw-On-Android/blob/main/LICENSE">
+      <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License">
+    </a>
+    <a href="https://github.com/PsProsen-Dev/OpenClaw-On-Android/discussions">
+      <img src="https://img.shields.io/github/discussions/PsProsen-Dev/OpenClaw-On-Android" alt="Discussions">
+    </a>
+    <a href="https://docs.openclaw.ai">
+      <img src="https://img.shields.io/badge/Docs-Mintlify-0f172a?logo=mintlify" alt="Docs">
+    </a>
+  </p>
 
-## 📖 Documentation
+  <p align="center">
+    <a href="#-quick-start">Quick Start</a> •
+    <a href="#-features">Features</a> •
+    <a href="#-documentation">Documentation</a> •
+    <a href="#-project-architecture">Architecture</a> •
+    <a href="#-community">Community</a>
+  </p>
+</div>
 
-Read the complete guides and setup instructions on our **[Mintlify Documentation site](docs/)**.
+<br/>
 
-* [Installation Guide](docs/installation.mdx)
-* [Configuration & Setup](docs/configuration.mdx)
-* [Troubleshooting](docs/troubleshooting.mdx)
-* [SSH Remote Setup](docs/ssh-guide.mdx)
+## 🌟 The Vision
 
----
+Your old Android phone? It's a powerful ARM server waiting to happen. OCA seamlessly installs the **OpenClaw** AI ecosystem directly onto your device via Termux. Powered by **Google Antigravity**, this completely bypasses sluggish Linux distributions (like Ubuntu on Proot), running natively with full `glibc` compatibility instead of Android's default Bionic libraries.
 
-## 📺 Media & Articles
-
-Learn more about the technology behind OCA and the power of on-device AI!
-
-- 📰 **Blog:** [Nano Banana Pro in Google Antigravity](https://antigravity.google/blog/nano-banana-pro-in-google-antigravity)
-- 📰 **Blog:** [Introducing Google Antigravity](https://antigravity.google/blog/introducing-google-antigravity)
-- 📰 **Blog:** [Gemini 3.1 Pro in Google Antigravity](https://antigravity.google/blog/gemini-3-1-pro-in-google-antigravity)
-- 🎥 **Video:** [Watch on YouTube](https://youtu.be/FB6HO7CZHWw)
-
----
-
-## 💡 The Idea
-
-Your old Android phone? It's a powerful ARM server waiting to happen. OCA installs OpenClaw directly on Termux with glibc compatibility — no Linux distribution needed.
-
-**What you get:**
-- ☁️ OpenClaw AI gateway natively on your phone
-- 🔧 Full Node.js v24 environment (glibc, not Bionic)
-- 🛠️ AI CLI tools (Claude Code, Gemini, Codex, Qwen Code, OpenCode)
-- 🌐 Browser IDE (code-server)
-- 📱 SSH access + auto-start on boot
-- 🔐 Root access integration (for rooted devices)
+> **Watch in Action**: [🚀 OpenClaw on Android Demo (YouTube)](https://youtu.be/FB6HO7CZHWw)
 
 ---
 
 ## 🚀 Quick Start
 
-Launch Termux and run the installer:
+Deploying OCA takes under 2 minutes. Launch **Termux** (from F-Droid) and execute:
 
 ```bash
 curl -sL https://raw.githubusercontent.com/PsProsen-Dev/OpenClaw-On-Android/master/bootstrap.sh | bash && source ~/.bashrc
 ```
 
-The installer will prompt you to install optional tools (like SSH, Qwen Code CLI, Termux:API, and Termux:Boot). Follow the on-screen instructions.
+The installer dynamically patches the environment and prompts you for optional integrations like **Termux:API**, **Termux:Boot**, and the **Qwen Code CLI**.
 
 ---
 
-## ⚙️ How It Works
+## ⚡ Features
 
-The installer bridges Termux (Bionic libc) and standard Linux (glibc):
-
-1. **glibc-runner** provides `ld-linux-aarch64.so.1` via pacman
-2. **Node.js v24** (linux-arm64) runs through a wrapper script that uses `ld.so`
-3. **Path patches** rewrite `/tmp`, `/bin/sh`, `/usr/bin/env` to Termux equivalents
-4. **glibc-compat.js** fixes Android kernel quirks (`os.cpus()`, `os.networkInterfaces()`)
-
----
-
-## 🛑 Android 12+ — Kill Phantom Process Killer
-
-Android 12+ aggressively kills background processes (`[Process completed (signal 9)]`). Fix it once:
-
-```bash
-# Connect to ADB from PC
-adb shell "settings put global settings_enable_monitor_phantom_procs false"
-```
+- **📱 Natively executed AI Gateway**: OpenClaw runs bare-metal in Termux.
+- **☁️ Full Node.js v24 Environment**: A completely independent `glibc` patched binary setup (bypassing `/system/lib64`).
+- **🤖 Built-in AI CLIs**: Zero-config prompts for _Qwen Code_, _Claude Code_, _Gemini_, and _Codex_.
+- **🌐 Remote Setup**: Out-of-the-box SSH Server integration (Port 8022).
+- **🛡️ Safe Root Support**: `oca-root` wrapper selectively executes root commands without compromising the Android system.
+- **🔄 Auto-Updates**: Keep the stack updated natively via `oca --update`.
 
 ---
 
-## 🙏 Credits
+## 🏗 Project Architecture
 
-Inspired by [AidanPark/openclaw-android](https://github.com/AidanPark/openclaw-android).
-Built by **[PsProsen-Dev](https://github.com/PsProsen-Dev)** ⚡
+<div align="center">
+  <img src="docs/images/architecture.png" alt="OCA Architecture" width="80%" style="border-radius: 8px; box-shadow: 0px 4px 10px rgba(0,0,0,0.5);" />
+</div>
 
-## 📄 License
-MIT License — see [LICENSE](LICENSE) for details.
+The OCA wrapper bridges the Android operating system and the Linux toolchain:
+1. **Pacman `glibc-runner`**: Injects `ld-linux-aarch64.so.1` to bypass Android's restricted linker.
+2. **Path Rewriting**: Standard UNIX paths (`/tmp`, `/bin/sh`) are dynamically mapped to Termux prefixes.
+3. **JS Runtime Shims**: `os.cpus()` and `os.networkInterfaces()` are polyfilled via `glibc-compat.js` to prevent V8 engine panics on restricted Android kernels.
+
+---
+
+## 📖 Documentation
+
+All official documentation is deployed using [Mintlify](https://mintlify.com) for a first-class reading experience.
+
+👉 **[Read the Full OCA Docs](docs/)**
+
+- [Installation Guide](docs/installation.mdx)
+- [Managing Configuration](docs/configuration.mdx)
+- [Troubleshooting & Fixes](docs/troubleshooting.mdx)
+- [SSH Remote Setup](docs/ssh-guide.mdx)
+
+### 🛑 Important: Android 12+ Phantom Process Killer
+If your device crashes with `[Process completed (signal 9)]`, Android's aggressive battery saving has killed Termux. You must disable this via ADB: [Read the Phantom Process Fix Guide](docs/disable-phantom-process-killer.mdx).
+
+---
+
+## 📰 Press & Antigravity Blogs
+
+OCA has been developed and showcased alongside cutting-edge experiments using Google's Antigravity AI frameworks:
+
+1. 🍌 **[Nano Banana Pro in Google Antigravity](https://antigravity.google/blog/nano-banana-pro-in-google-antigravity)**
+2. 🚀 **[Introducing Google Antigravity](https://antigravity.google/blog/introducing-google-antigravity)**
+3. 🧠 **[Gemini 3.1 Pro in Google Antigravity](https://antigravity.google/blog/gemini-3-1-pro-in-google-antigravity)**
+
+---
+
+## 🤝 Community
+
+Join the discussion! Ask questions, share your Android setup, or request features in our GitHub community space.
+
+- 💬 **[GitHub Discussions](https://github.com/PsProsen-Dev/OpenClaw-On-Android/discussions)**
+- 🐛 **[Report an Issue](https://github.com/PsProsen-Dev/OpenClaw-On-Android/issues)**
+
+---
+
+## 🙏 Credits & License
+
+Built with extreme precision by **[PsProsen-Dev](https://github.com/PsProsen-Dev)** using _Jarvis (RTX⚡) / OpenClaw Authored Architecture_.  
+Inspired heavily by the upstream project, [AidanPark/openclaw-android](https://github.com/AidanPark/openclaw-android).
+
+<div align="center">
+  Released under the <a href="LICENSE">MIT License</a>.
+</div>
