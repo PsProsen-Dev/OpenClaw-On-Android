@@ -90,17 +90,6 @@ All official documentation is deployed using [Mintlify](https://mintlify.com) fo
 ### 🛑 Important: Android 12+ Phantom Process Killer
 If your device crashes with `[Process completed (signal 9)]`, Android's aggressive battery saving has killed Termux. You must disable this via ADB: [Read the Phantom Process Fix Guide](docs/disable-phantom-process-killer.mdx).
 
----
-
-## 📰 Press & Blogs
-
-OCA has been developed and showcased alongside cutting-edge experiments:
-
-1. 🍌 **[Nano Banana Pro](https://antigravity.google/blog/nano-banana-pro-in-google-antigravity)**
-2. 🚀 **[Introducing Google Antigravity](https://antigravity.google/blog/introducing-google-antigravity)**
-3. 🧠 **[Gemini 3.1 Pro](https://antigravity.google/blog/gemini-3-1-pro-in-google-antigravity)**
-
----
 
 ## 🤝 Community
 
