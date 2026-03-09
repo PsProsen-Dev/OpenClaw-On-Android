@@ -1,0 +1,18 @@
+OCA 10.03.2026 Release - Local LLM support
+
+New Features:
+- Add Local LLM documentation (node-llama-cpp and Ollama)
+- Support for GGUF models on Android
+- Model recommendations and troubleshooting guide
+
+Documentation:
+- New: docs/local-llm.mdx (complete guide)
+- Updated: docs/ai-cli-tools.mdx
+- Updated: docs/introduction.mdx
+- Updated: README.md
+- New: RELEASES/10.03.2026.md
+
+Technical Details:
+- node-llama-cpp uses --ignore-scripts (prebuilt binary)
+- Ollama server integration documented
+- Cloud vs Local comparison added

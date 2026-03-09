@@ -1,0 +1,8 @@
+docs: Create stunning visual README
+
+- Add feature comparison tables
+- Add ASCII architecture diagram
+- Improve visual hierarchy with badges
+- Add model recommendation table
+- Better call-to-action sections
+- Enhanced community links

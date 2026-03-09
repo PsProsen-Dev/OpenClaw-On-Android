@@ -45,19 +45,55 @@ OCA seamlessly installs the **OpenClaw** AI ecosystem directly onto your device 
 
 <div align="center">
 
-### Deploying OCA takes under 2 minutes
+### Deploying OCA takes under 5 minutes
 
 </div>
 
-1. **Open Termux** (from [F-Droid](https://f-droid.org/packages/com.termux/))
-2. **Execute one command:**
+#### Step 1: Prepare Your Phone ⚙️
+
+Configure Developer Options, Stay Awake, and battery optimization to prevent Android from killing Termux.
+
+👉 **[Read Phone Setup Guide](docs/phone-setup.mdx)** for step-by-step instructions.
+
+#### Step 2: Install Termux 📱
+
+> **⚠️ Important**: The Play Store version of Termux is **discontinued**. You **must** install from F-Droid.
+
+1. Open browser and go to [f-droid.org](https://f-droid.org/packages/com.termux/)
+2. Search for **Termux** → Tap **Download APK**
+3. Install and allow "Install from unknown sources"
+
+#### Step 3: Initial Setup 🔧
+
+Open Termux and run:
+
+```bash
+pkg update -y && pkg install -y curl
+```
+
+#### Step 4: Install OCA 🚀
 
 ```bash
 curl -sL https://raw.githubusercontent.com/PsProsen-Dev/OpenClaw-On-Android/master/bootstrap.sh | bash && source ~/.bashrc
 ```
 
-3. **Answer the prompts** (Termux:API, Termux:Boot, AI CLIs)
-4. **Done!** 🎉
+Takes 3-10 minutes depending on network and device.
+
+#### Step 5: Start OpenClaw Setup
+
+```bash
+openclaw onboard
+```
+
+Follow the on-screen instructions.
+
+#### Step 6: Start Gateway
+
+```bash
+openclaw gateway
+```
+
+> **⚠️ Important**: Run directly in Termux app, **not via SSH**. SSH session disconnect will stop the gateway.
 
 <div align="center">
 
@@ -89,13 +125,35 @@ curl -sL https://raw.githubusercontent.com/PsProsen-Dev/OpenClaw-On-Android/mast
 | Remote terminal access | Selective root commands |
 | 24/7 headless operation | No system compromise |
 
-| <g-emoji class="g-emoji" alias="arrows_counterclockwise">🔄</g-emoji> Auto-Updates |
-|:---:|
-| One-command updates via `oca --update` |
-| Automatic security patches |
-| Rolling release model |
+| <g-emoji class="g-emoji" alias="arrows_counterclockwise">🔄</g-emoji> Auto-Updates | <g-emoji class="g-emoji" alias="wrench">🔧</g-emoji> Unified CLI |
+|:---:|:---:|
+| One-command updates via `oca --update` | `oa` command for all operations |
+| Automatic security patches | Update, status, install, uninstall |
+| Rolling release model | Platform-aware architecture |
 
 </div>
+
+---
+
+## 🔧 CLI Reference
+
+After installation, use the `oa` command for managing your installation:
+
+| Command | Description |
+|---------|-------------|
+| `oa --update` | Update OpenClaw and Android patches |
+| `oa --install` | Install optional tools (tmux, code-server, AI CLIs) |
+| `oa --uninstall` | Remove OpenClaw on Android |
+| `oa --status` | Show installation status |
+| `oa --version` | Show version |
+| `oa --help` | Show available options |
+
+**Update example:**
+```bash
+oa --update && source ~/.bashrc
+```
+
+This updates: OpenClaw core, code-server, OpenCode, AI CLI tools, Android patches
 
 ---
 
@@ -202,13 +260,15 @@ curl -fsSL https://ollama.com/install.sh | sh
 | 📚 Guide | Description |
 |----------|-------------|
 | [🚀 Quick Start](docs/quickstart.mdx) | Get running in 5 minutes |
+| [📱 Phone Setup](docs/phone-setup.mdx) | Developer Options, Stay Awake, Battery |
 | [🔧 Installation](docs/installation.mdx) | Full 8-step installer breakdown |
 | [🤖 AI CLI Tools](docs/ai-cli-tools.mdx) | Qwen, Claude, Gemini, Codex setup |
-| [🦙 Local LLM](docs/local-llm.mdx) | **NEW!** Run models locally |
-| [⚙️ Configuration](docs/configuration.mdx) | Manage settings and preferences |
+| [🦙 Local LLM](docs/local-llm.mdx) | Run models locally (node-llama-cpp, Ollama) |
+| [🌐 Dashboard Connect](docs/dashboard-connect.mdx) | Multi-device management from PC |
 | [🔐 SSH Setup](docs/ssh-guide.mdx) | Remote access configuration |
+| [⚙️ Configuration](docs/configuration.mdx) | Manage settings and preferences |
 | [🔧 Troubleshooting](docs/troubleshooting.mdx) | Common errors and fixes |
-| [👻 Phantom Process Killer](docs/phantom-process-killer.mdx) | Android 12+ fix |
+| [👻 Phantom Process Killer](docs/disable-phantom-process-killer.mdx) | Android 12+ fix |
 
 > 📑 **Browse all docs:** [`docs/`](docs/)
 
@@ -229,11 +289,100 @@ adb shell settings put global max_phantom_processes 64
 
 ---
 
-## 🎯 What's New in v10.03.2026
+## 📱 Phone Preparation
 
 <div align="center">
 
-### 🦙 Local LLM Edition
+### Essential for 24/7 Operation
+
+</div>
+
+Android may kill background processes or throttle them when the screen is off. For 24/7 operation:
+
+| Setting | Purpose | How To |
+|---------|---------|--------|
+| **Developer Options** | Enable advanced controls | Settings → About → Tap Build Number 7x |
+| **Stay Awake** | Prevent CPU throttling | Developer Options → Stay Awake |
+| **Battery Optimization** | Prevent app killing | Settings → Apps → Termux → Battery → Unrestricted |
+| **Charge Limit** | Protect battery during 24/7 use | Use AccuBattery or similar |
+
+📖 **[Read Complete Phone Setup Guide](docs/phone-setup.mdx)** for detailed instructions.
+
+---
+
+## 🌐 Dashboard & Remote Access
+
+### SSH Setup
+
+Access your OCA dashboard from PC browser via SSH tunnel:
+
+```bash
+# From your PC terminal
+ssh -L 3000:localhost:3000 -L 8080:localhost:8080 u0_aXXX@192.168.X.X -p 8022
+```
+
+📖 **[Read SSH Setup Guide](docs/ssh-guide.mdx)** for complete instructions.
+
+### Dashboard Connect (Multi-Device)
+
+Running OCA on multiple devices? Use **Dashboard Connect** to manage them from your PC:
+
+- Save connection settings (IP, token, ports) for each device with a nickname
+- Generates SSH tunnel commands automatically
+- Switch between devices with one click
+- **Your data stays local** — Settings saved only in browser localStorage
+
+> 💡 **Tip**: Name your devices (e.g., "Old Pixel", "Bedroom Phone") for easy identification.
+
+---
+
+## 🏗 Platform Architecture (Developer Info)
+
+<div align="center">
+
+### L1/L2/L3 Dependency Layers
+
+</div>
+
+OCA uses a **platform-plugin architecture** that separates platform-agnostic infrastructure from platform-specific code:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ Orchestrators (install.sh, update-core.sh, uninstall.sh)    │
+│ ── Platform-agnostic. Read config.env and delegate.         │
+├─────────────────────────────────────────────────────────────┤
+│ Shared Scripts (scripts/)                                   │
+│ ── L1: install-infra-deps.sh (always)                       │
+│ ── L2: install-glibc.sh, install-nodejs.sh (conditional)    │
+│ ── L3: Optional tools (user-selected)                       │
+├─────────────────────────────────────────────────────────────┤
+│ Platform Plugins (platforms/<platform>/)                    │
+│ ── config.env: declares dependencies                        │
+│ ── install.sh / update.sh / uninstall.sh / ...              │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Dependency layers:**
+
+| Layer | Scope | Examples | Controlled by |
+|-------|-------|----------|---------------|
+| **L1** | Infrastructure (always) | git, pkg update | Orchestrator |
+| **L2** | Platform runtime (conditional) | glibc, Node.js, build tools | config.env flags |
+| **L3** | Optional tools (user-selected) | tmux, code-server, AI CLIs | User prompts |
+
+### Installed Components
+
+**Core Infrastructure (L1):** git
+
+**Platform Runtime (L2):** pacman, glibc-runner, Node.js v24, python, make, cmake, clang, binutils
+
+**OpenClaw Platform:** OpenClaw, clawdhub, PyYAML, libvips
+
+**Optional Tools (L3):** tmux, ttyd, dufs, android-tools, code-server, OpenCode, Claude Code, Gemini CLI, Codex CLI
+
+---
+
+## 🎯 What's New in v10.03.2026
 
 </div>
 
