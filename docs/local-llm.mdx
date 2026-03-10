@@ -5,9 +5,13 @@ description: "Run local LLM inference via node-llama-cpp and Ollama on your Andr
 
 ## Overview
 
-OpenClaw supports **local LLM inference** via [`node-llama-cpp`](https://github.com/withcatai/node-llama-cpp). The prebuilt native binary (`@node-llama-cpp/linux-arm64`) is included with the installation and loads successfully under the glibc environment — **local LLM is technically functional on the phone**.
+OpenClaw supports **local LLM inference** via [`node-llama-cpp`](https://github.com/withcatai/node-llama-cpp) and **Ollama integration**. The prebuilt native binary (`@node-llama-cpp/linux-arm64`) is included with the installation and loads successfully under the glibc environment — **local LLM is technically functional on the phone**.
 
 However, there are **practical constraints** to consider before running local models.
+
+<Info>
+  **☁️ Cloud Models Available**: Ollama now supports cloud-hosted models! Use `ollama launch openclaw --model kimi-k2.5:cloud` for superior performance without local resource usage. See [Cloud Models](#ollama-cloud-models) section below.
+</Info>
 
 ---
 
@@ -23,6 +27,51 @@ However, there are **practical constraints** to consider before running local mo
 <Info>
   For **experimentation**, small models like **TinyLlama 1.1B (Q4, ~670MB)** can run on the phone. For **production use**, cloud LLM providers are recommended.
 </Info>
+
+---
+
+## ☁️ Ollama Cloud Models
+
+**Best of both worlds**: Run models in the cloud with Ollama's cloud integration — no local RAM/storage constraints!
+
+### Quick Start
+
+```bash
+# Pull and launch with cloud model
+ollama pull kimi-k2.5:cloud
+ollama launch openclaw --model kimi-k2.5:cloud
+```
+
+### Recommended Cloud Models
+
+| Model | Use Case | Context |
+|-------|----------|---------|
+| **`kimi-k2.5:cloud`** | Multimodal reasoning with subagents | 64k+ tokens |
+| **`minimax-m2.5:cloud`** | Fast, efficient coding | 64k+ tokens |
+| **`glm-5:cloud`** | Reasoning and code generation | 64k+ tokens |
+| **`gpt-oss:120b-cloud`** | High-performance tasks | 128k tokens |
+| **`gpt-oss:20b`** | Balanced performance | 64k tokens |
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `ollama launch openclaw` | Launch with model selector |
+| `ollama launch openclaw --model <model>` | Launch with specific cloud model |
+| `ollama launch openclaw --config` | Configure without launching |
+| `ollama pull <model>:cloud` | Pull cloud model to local registry |
+
+### Why Cloud Models?
+
+| Advantage | Details |
+|-----------|---------|
+| **No Local Resources** | Zero RAM/storage usage on phone |
+| **Superior Performance** | Full GPU acceleration on cloud servers |
+| **Large Context** | 64k-128k token windows available |
+| **Always Updated** | Latest model versions automatically |
+| **Privacy Option** | Local models still available for sensitive data |
+
+> 💡 **Recommendation**: Use **cloud models for production** workloads, **local models for testing/experimentation**.
 
 ---
 
@@ -140,14 +189,18 @@ ollama serve
 
 ## 🌐 Cloud vs Local Comparison
 
-| Feature | Local LLM | Cloud LLM (OpenClaw) |
-|---------|-----------|---------------------|
-| **Speed** | Slow (CPU-only) | Fast (GPU-accelerated) |
-| **Privacy** | ✅ Full privacy | Depends on provider |
-| **Cost** | Free (after hardware) | Pay-per-token |
-| **Model Size** | Limited by RAM | Unlimited |
-| **Setup** | Manual | One command |
-| **Internet** | Not needed | Required |
+| Feature | Local LLM | Cloud LLM (OpenClaw) | Ollama Cloud Models |
+|---------|-----------|---------------------|---------------------|
+| **Speed** | Slow (CPU-only) | Fast (GPU-accelerated) | ⚡ Fastest (cloud GPU) |
+| **Privacy** | ✅ Full privacy | Depends on provider | Depends on provider |
+| **Cost** | Free (after hardware) | Pay-per-token | Free via Ollama |
+| **Model Size** | Limited by RAM (2-8GB) | Unlimited | Unlimited |
+| **Context Window** | 2k-8k tokens | 64k-200k tokens | 64k-128k tokens |
+| **Setup** | Manual download | One command | `ollama pull` |
+| **Internet** | Not needed | Required | Required |
+| **RAM Usage** | 2-8GB | None | None |
+| **Storage** | 4-70GB | None | Minimal |
+| **Best For** | Testing, offline | Production | Production + testing |
 
 ---
 

@@ -117,7 +117,7 @@ openclaw gateway
 |:---:|:---:|
 | Qwen Code, Claude Code, Gemini, Codex | node-llama-cpp + Ollama support |
 | Zero-config setup | Run models locally (experimental) |
-| Cloud API routing | GGUF model support |
+| Cloud API routing | **☁️ NEW: Ollama Cloud Models** |
 
 | <g-emoji class="g-emoji" alias="globe_with_meridians">🌐</g-emoji> Remote Access | <g-emoji class="g-emoji" alias="shield">🛡️</g-emoji> Safe Root |
 |:---:|:---:|
@@ -163,9 +163,29 @@ This updates: OpenClaw core, code-server, OpenCode, AI CLI tools, Android patche
 
 ### Run AI models directly on your phone!
 
+**☁️ NEW: Ollama Cloud Models** - No local resources needed!
+
 </div>
 
-OCA now supports **local LLM inference** via `node-llama-cpp` and `Ollama`. Your phone can run GGUF models natively!
+OCA now supports **local LLM inference** via `node-llama-cpp` and **Ollama** (including cloud models!).
+
+### ☁️ Ollama Cloud Models (Recommended)
+
+Run powerful models in the cloud — zero local RAM/storage usage!
+
+```bash
+# Pull and launch with cloud model
+ollama pull kimi-k2.5:cloud
+ollama launch openclaw --model kimi-k2.5:cloud
+```
+
+**Recommended Cloud Models:**
+- `kimi-k2.5:cloud` - Multimodal reasoning (64k context)
+- `minimax-m2.5:cloud` - Fast coding (64k context)
+- `glm-5:cloud` - Reasoning & code generation
+- `gpt-oss:120b-cloud` - High-performance (128k context)
+
+### 🏠 Local Models (Experimental)
 
 <details>
 <summary><b>⚠️ Important Constraints (click to expand)</b></summary>

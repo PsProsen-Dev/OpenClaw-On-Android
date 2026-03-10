@@ -1,0 +1,27 @@
+feat: Add missing features from AidanPark/openclaw-android
+
+Major Updates:
+- Enhanced Quick Start with 6-step detailed guide
+- Added Phone Preparation section (Developer Options, Stay Awake)
+- Added Dashboard Connect for multi-device management
+- Added oa CLI reference (update, status, install, uninstall)
+- Added Platform Architecture section (L1/L2/L3 layers)
+- Added Installed Components breakdown by layer
+- Updated documentation navigation with new pages
+
+New Sections:
+- Step-by-step installation (6 steps like original)
+- Phone setup guide reference
+- SSH tunnel instructions
+- Dashboard Connect feature
+- Platform-plugin architecture explanation
+- Dependency layers (L1/L2/L3)
+- Installed components table
+
+Documentation Updates:
+- docs/phone-setup.mdx (new)
+- docs/dashboard-connect.mdx (new)
+- Updated README with comparison table
+- Enhanced troubleshooting references
+
+Inspired by: AidanPark/openclaw-android
