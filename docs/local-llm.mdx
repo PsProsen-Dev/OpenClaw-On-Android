@@ -149,6 +149,45 @@ curl http://localhost:11434/api/generate -d '{
 
 ---
 
+## 🔗 Official Ollama OpenClaw Integration
+
+OpenClaw officially integrates with Ollama to provide a seamless local AI assistant experience.
+
+### Why it's powerful
+
+1. **Native API Integration**: OpenClaw connects directly to Ollama's native `/api/chat` endpoint. This ensures full support for streaming and **tool calling**. 
+   > ⚠️ **Important**: Do not use the `/v1` OpenAI-compatible URL with OpenClaw. It breaks tool calling and causes models to output raw JSON!
+2. **Automatic Model Discovery**: OpenClaw queries `/api/tags` and `/api/show` to automatically find your downloaded Ollama models, detect if they support tool calling, and configure their context windows appropriately.
+
+### Setup Methods
+
+**Method A: Ollama Launcher (Recommended)**
+The easiest way to connect OpenClaw to Ollama is using the official launcher command:
+```bash
+ollama launch openclaw
+```
+This setups the security profile, configures the provider, and sets your primary model. To launch a specific model directly:
+```bash
+# Example with cloud model
+ollama launch openclaw --model kimi-k2.5:cloud
+```
+
+**Method B: OpenClaw Onboarding**
+Run the onboarding wizard and select "Ollama" when asked for a provider:
+```bash
+openclaw onboard
+```
+It will ask for your Ollama base URL (default is `http://127.0.0.1:11434`).
+
+**Method C: Explicit Configuration**
+You can force OpenClaw to use Ollama by exporting the API key environment variable before starting the gateway:
+```bash
+export OLLAMA_API_KEY="ollama-local"
+openclaw gateway
+```
+
+---
+
 ## 📊 Model Recommendations
 
 | Model | Size (Q4) | RAM Needed | Speed | Use Case |
