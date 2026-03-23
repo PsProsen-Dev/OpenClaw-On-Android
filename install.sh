@@ -157,7 +157,7 @@ fi
 [ "$INSTALL_KILO_CODE" = true ] && bash "$SCRIPT_DIR/scripts/install-kilocode.sh" || true
 [ "$INSTALL_MISTRAL_VIBE" = true ] && bash "$SCRIPT_DIR/scripts/install-mistral-vibe.sh" || true
 [ "$INSTALL_CODEX_CLI" = true ] && npm install -g @openai/codex --ignore-scripts --no-audit --no-fund --loglevel=error || true
-[ "$INSTALL_GITHUB_COPILOT" = true ] && npm install -g @github/copilot --ignore-scripts --no-audit --no-fund --loglevel=error || true
+[ "$INSTALL_GITHUB_COPILOT" = true ] && bash "$SCRIPT_DIR/scripts/install-github-copilot.sh" || true
 
 # ── Termux:Boot ──
 [ "$INSTALL_BOOT" = true ] && bash "$SCRIPT_DIR/scripts/setup-boot.sh" || true
