@@ -118,7 +118,7 @@ if command -v copilot &>/dev/null; then
     AI_TOOL_LABELS+=("GitHub Copilot CLI")
 fi
 
-if [ ${#AI_TOOLS_FOUND[@]} -eq 0 ]; then
+if [ ${#AI_TOOL_LABELS[@]} -eq 0 ]; then
     echo -e "${YELLOW}[SKIP]${NC} No AI CLI tools detected"
 else
     echo "Installed AI CLI tools detected:"
