@@ -275,9 +275,9 @@ def main() -> int:
             patch_tool(TOOLS["qwen"])
 
         if args.verify:
-            ok = verify_tool(TOOLS["gemini"])
-            ok = verify_tool(TOOLS["qwen"]) and ok
-            return 0 if ok else 1
+            gemini_ok = verify_tool(TOOLS["gemini"])
+            qwen_ok = verify_tool(TOOLS["qwen"])
+            return 0 if gemini_ok and qwen_ok else 1
     except Exception as exc:  # noqa: BLE001
         log(f"[FAIL] {exc}")
         return 1
