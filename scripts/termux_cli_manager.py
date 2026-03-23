@@ -155,7 +155,7 @@ export PATH="{PREFIX}/bin:$PATH"
 if command -v rg >/dev/null 2>&1; then
   export RIPGREP_CONFIG_PATH="${{RIPGREP_CONFIG_PATH:-}}"
 fi
-exec "{NODE_BIN}" {"--no-warnings=DEP0040 " if spec.key == "gemini" else ""}"{spec.entrypoint}" "$@"
+  exec "{NODE_BIN}" {"--no-warnings=DEP0040" if spec.key == "gemini" else ""} "{spec.entrypoint}" "$@"
 """
     wrapper_path.write_text(wrapper, encoding="utf-8")
     wrapper_path.chmod(0o755)
