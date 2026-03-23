@@ -1,6 +1,6 @@
 ---
 title: "AI CLI Tools"
-description: "Claude Code, Qwen Code, Gemini CLI, Codex, and Local LLM — set up on your Android device."
+description: "Qwen Code, Gemini CLI, OpenCode, Kilo Code, Mistral Vibe, Codex, and GitHub Copilot CLI — set up on your Android device."
 ---
 
 ## Overview
@@ -41,17 +41,21 @@ qwen
   `--ignore-scripts` skips `node-pty` and `@lvce-editor/ripgrep` native builds, which both fail on Android. Core CLI functionality is unaffected.
 </Info>
 
----
-
-## Claude Code
+OCA also ships a helper manager script for Gemini/Qwen:
 
 ```bash
-npm install -g @anthropic-ai/claude-code
-claude config set apiKey YOUR_ANTHROPIC_KEY
-claude
+python3 ~/.oca/scripts/termux_cli_manager.py --ensure-rg --patch-qwen
 ```
 
-Get your key at [console.anthropic.com](https://console.anthropic.com).
+---
+
+## OpenCode
+
+Installed through the OCA optional tools flow:
+
+```bash
+opencode
+```
 
 ---
 
@@ -70,6 +74,12 @@ gemini
 
 Get your key at [aistudio.google.com](https://aistudio.google.com/apikey).
 
+To refresh the Termux/OCA wrapper and ensure system ripgrep is available:
+
+```bash
+python3 ~/.oca/scripts/termux_cli_manager.py --ensure-rg --patch-gemini
+```
+
 ---
 
 ## Codex (OpenAI)
@@ -78,6 +88,33 @@ Get your key at [aistudio.google.com](https://aistudio.google.com/apikey).
 npm install -g @openai/codex
 export OPENAI_API_KEY=your_key
 codex
+```
+
+---
+
+## Kilo Code
+
+```bash
+npm install -g @kilocode/cli --ignore-scripts
+kilo
+```
+
+---
+
+## Mistral Vibe CLI
+
+```bash
+python3 -m pip install --user -U mistral-vibe
+mistral-vibe
+```
+
+---
+
+## GitHub Copilot CLI
+
+```bash
+npm install -g @github/copilot --ignore-scripts
+copilot
 ```
 
 ---
@@ -102,7 +139,7 @@ qwen
 npm list -g --depth=0
 
 # Update all
-npm update -g @qwen-code/qwen-code @anthropic-ai/claude-code @google/gemini-cli @openai/codex
+npm update -g @qwen-code/qwen-code @google/gemini-cli @kilocode/cli @openai/codex @github/copilot
 
 # Or via OCA
 oca --update

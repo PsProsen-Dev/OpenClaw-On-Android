@@ -91,21 +91,31 @@ step 7 "AI CLI tools"
 AI_TOOLS_FOUND=()
 AI_TOOL_LABELS=()
 
-if command -v claude &>/dev/null; then
-    AI_TOOLS_FOUND+=("@anthropic-ai/claude-code")
-    AI_TOOL_LABELS+=("Claude Code")
+if command -v qwen &>/dev/null || command -v qwen-code &>/dev/null; then
+    AI_TOOLS_FOUND+=("@qwen-code/qwen-code")
+    AI_TOOL_LABELS+=("Qwen Code")
 fi
 if command -v gemini &>/dev/null; then
     AI_TOOLS_FOUND+=("@google/gemini-cli")
     AI_TOOL_LABELS+=("Gemini CLI")
 fi
+if command -v opencode &>/dev/null; then
+    AI_TOOL_LABELS+=("OpenCode")
+fi
+if command -v kilo &>/dev/null; then
+    AI_TOOLS_FOUND+=("@kilocode/cli")
+    AI_TOOL_LABELS+=("Kilo Code")
+fi
+if command -v mistral-vibe &>/dev/null || command -v mistralvibe &>/dev/null; then
+    AI_TOOL_LABELS+=("Mistral Vibe CLI")
+fi
 if command -v codex &>/dev/null; then
     AI_TOOLS_FOUND+=("@openai/codex")
     AI_TOOL_LABELS+=("Codex CLI")
 fi
-if command -v qwen-code &>/dev/null; then
-    AI_TOOLS_FOUND+=("@qwen-code/qwen-code")
-    AI_TOOL_LABELS+=("Qwen Code")
+if command -v copilot &>/dev/null; then
+    AI_TOOLS_FOUND+=("@github/copilot")
+    AI_TOOL_LABELS+=("GitHub Copilot CLI")
 fi
 
 if [ ${#AI_TOOLS_FOUND[@]} -eq 0 ]; then
@@ -126,6 +136,13 @@ else
                 echo -e "${YELLOW}[WARN]${NC} Failed to remove $pkg"
             fi
         done
+        if command -v mistral-vibe &>/dev/null || command -v mistralvibe &>/dev/null; then
+            if python3 -m pip uninstall -y mistral-vibe 2>/dev/null || python3 -m pip uninstall -y mistralvibe 2>/dev/null; then
+                echo -e "${GREEN}[OK]${NC}   Removed Mistral Vibe CLI"
+            else
+                echo -e "${YELLOW}[WARN]${NC} Failed to remove Mistral Vibe CLI"
+            fi
+        fi
     else
         echo -e "${YELLOW}[KEEP]${NC} Keeping AI CLI tools"
     fi

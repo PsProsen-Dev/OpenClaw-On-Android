@@ -91,7 +91,34 @@ Also writes the **DNS fix** (`$PREFIX/glibc/etc/resolv.conf`) to prevent `EAI_AG
 
 ## Step 7 — Optional Tools Install
 
-Installs selected tools: Termux packages via `pkg`, AI CLIs via `npm install -g`.
+Installs selected tools: Termux packages via `pkg`, AI CLIs via `npm install -g`, while **Homebrew (Linuxbrew)** and the **Go toolchain** are installed by default as part of the base OCA Linux-like environment.
+
+### Homebrew (`scripts/install-homebrew.sh`)
+
+OCA runs the official Homebrew installer into `~/.linuxbrew` and appends:
+
+```bash
+eval "$($HOME/.linuxbrew/bin/brew shellenv)"
+```
+
+to `~/.bashrc`.
+
+<Warning>
+  Homebrew on Android is still **experimental**. The OCA glibc runtime makes many Linux tools usable, but some formulae may still need manual tweaks.
+</Warning>
+
+### Go (`scripts/install-go.sh`)
+
+OCA installs the Termux `golang` package so `go install ...` workflows are ready before users start selecting OpenClaw skills, helper CLIs, and small utilities.
+
+### Gemini/Qwen fixer (`scripts/termux_cli_manager.py`)
+
+OCA now includes a small manager for Gemini CLI and Qwen Code on Termux. It can:
+
+- ensure `ripgrep` is installed from `pkg`
+- install/update the CLIs with `--ignore-scripts`
+- recreate stable wrappers that force execution through OCA's glibc Node.js
+- verify that wrapper, entrypoint, and `rg` are all present
 
 ---
 

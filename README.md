@@ -87,6 +87,8 @@ openclaw onboard
 
 Follow the on-screen instructions.
 
+> **Included by default**: OCA now installs **Homebrew (Linuxbrew)** and the **Go toolchain** automatically so the Linux-like environment is ready before you start selecting OpenClaw skills and helper tools.
+
 #### Step 6: Start Gateway
 
 ```bash
@@ -115,7 +117,7 @@ openclaw gateway
 
 | <g-emoji class="g-emoji" alias="robot">🤖</g-emoji> AI CLI Tools | <g-emoji class="g-emoji" alias="llama">🦙</g-emoji> Local LLM |
 |:---:|:---:|
-| Qwen Code, Claude Code, Gemini, Codex | node-llama-cpp + Ollama support |
+| Qwen Code, Gemini, OpenCode, Kilo, Mistral Vibe, Codex, Copilot | node-llama-cpp + Ollama support |
 | Zero-config setup | Run models locally (experimental) |
 | Cloud API routing | **☁️ NEW: Ollama Cloud Models** |
 
@@ -147,6 +149,12 @@ After installation, use the `oca` command for managing your installation:
 | `oca --status` | Show installation status |
 | `oca --version` | Show version |
 | `oca --help` | Show available options |
+
+For Gemini/Qwen repair on Termux, OCA also installs a helper manager:
+
+```bash
+python3 ~/.oca/scripts/termux_cli_manager.py --ensure-rg --patch-both --verify
+```
 
 **Update example:**
 ```bash
@@ -282,7 +290,7 @@ curl -fsSL https://ollama.com/install.sh | sh
 | [🚀 Quick Start](docs/quickstart.mdx) | Get running in 5 minutes |
 | [📱 Phone Setup](docs/phone-setup.mdx) | Developer Options, Stay Awake, Battery |
 | [🔧 Installation](docs/installation.mdx) | Full 8-step installer breakdown |
-| [🤖 AI CLI Tools](docs/ai-cli-tools.mdx) | Qwen, Claude, Gemini, Codex setup |
+| [🤖 AI CLI Tools](docs/ai-cli-tools.mdx) | Qwen, Gemini, OpenCode, Kilo, Mistral Vibe, Codex, Copilot setup |
 | [🦙 Local LLM](docs/local-llm.mdx) | Run models locally (node-llama-cpp, Ollama) |
 | [🌐 Dashboard Connect](docs/dashboard-connect.mdx) | Multi-device management from PC |
 | [🔐 SSH Setup](docs/ssh-guide.mdx) | Remote access configuration |
@@ -398,7 +406,7 @@ OCA uses a **platform-plugin architecture** that separates platform-agnostic inf
 
 **OpenClaw Platform:** OpenClaw, clawdhub, PyYAML, libvips
 
-**Optional Tools (L3):** tmux, ttyd, dufs, android-tools, code-server, OpenCode, Claude Code, Gemini CLI, Codex CLI
+**Optional Tools (L3):** tmux, ttyd, dufs, android-tools, code-server, Qwen Code, Gemini CLI, OpenCode, Kilo Code, Mistral Vibe CLI, Codex CLI, GitHub Copilot CLI
 
 ---
 
