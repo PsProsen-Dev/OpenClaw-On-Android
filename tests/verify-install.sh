@@ -106,6 +106,17 @@ fi
 
 command -v opencode &>/dev/null && check_pass "opencode command available"
 command -v qwen &>/dev/null && check_pass "qwen command available"
+if command -v rg &>/dev/null; then
+    check_pass "ripgrep available"
+else
+    check_warn "ripgrep not installed"
+fi
+
+if [ -f "$PROJECT_DIR/scripts/termux_cli_manager.py" ]; then
+    check_pass "Termux CLI manager script present"
+else
+    check_warn "Termux CLI manager script missing"
+fi
 
 # Bashrc check
 if grep -qF "OCA" "$HOME/.bashrc" 2>/dev/null; then

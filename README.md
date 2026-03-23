@@ -35,7 +35,7 @@ OCA seamlessly installs the **OpenClaw** AI ecosystem directly onto your device 
 | Slow Proot containers | **Native ARM64 execution** |
 | Bionic libc limitations | **Full glibc compatibility** |
 | Manual setup (hours) | **One-command install (2 mins)** |
-| Limited AI tools | **4+ AI CLIs pre-configured** |
+| Limited AI tools | **7 AI CLIs + Linux toolchain ready** |
 | No remote access | **SSH server included** |
 | Static installation | **Auto-updating ecosystem** |
 
@@ -87,6 +87,8 @@ openclaw onboard
 
 Follow the on-screen instructions.
 
+> **Included by default**: OCA now installs **Homebrew (Linuxbrew)** and the **Go toolchain** automatically so the Linux-like environment is ready before you start selecting OpenClaw skills and helper tools.
+
 #### Step 6: Start Gateway
 
 ```bash
@@ -103,6 +105,23 @@ openclaw gateway
 
 ---
 
+## ✅ What You Get by Default
+
+Before you even start choosing optional skills and AI CLIs, OCA already prepares the core Linux-like runtime:
+
+| Component | What OCA sets up |
+|-----------|------------------|
+| **glibc runtime** | `glibc-runner` + native Linux execution path |
+| **Node.js** | glibc-backed Node.js v24 wrapper |
+| **Homebrew** | Linuxbrew in `~/.linuxbrew` |
+| **Go** | Termux `golang` toolchain |
+| **OpenClaw core** | `openclaw`, `clawdhub`, patches, update flow |
+| **Remote-ready base** | SSH + 24/7 Termux-friendly environment |
+
+That means users only need to choose the **skills / AI tools they actually want** — the base system is already prepared.
+
+---
+
 ## ⚡ Features
 
 <div align="center">
@@ -115,7 +134,7 @@ openclaw gateway
 
 | <g-emoji class="g-emoji" alias="robot">🤖</g-emoji> AI CLI Tools | <g-emoji class="g-emoji" alias="llama">🦙</g-emoji> Local LLM |
 |:---:|:---:|
-| Qwen Code, Claude Code, Gemini, Codex | node-llama-cpp + Ollama support |
+| Qwen Code, Gemini, OpenCode, Kilo, Mistral Vibe, Codex, Copilot | node-llama-cpp + Ollama support |
 | Zero-config setup | Run models locally (experimental) |
 | Cloud API routing | **☁️ NEW: Ollama Cloud Models** |
 
@@ -127,11 +146,27 @@ openclaw gateway
 
 | <g-emoji class="g-emoji" alias="arrows_counterclockwise">🔄</g-emoji> Auto-Updates | <g-emoji class="g-emoji" alias="wrench">🔧</g-emoji> Unified CLI |
 |:---:|:---:|
-| One-command updates via `oca --update` | `oa` command for all operations |
+| One-command updates via `oca --update` | `oca` command for all operations |
 | Automatic security patches | Update, status, install, uninstall |
 | Rolling release model | Platform-aware architecture |
 
 </div>
+
+---
+
+## 🤖 AI CLI Priority Order
+
+OCA now presents AI CLI choices in a more Android-friendly order:
+
+1. **Qwen Code** — best first choice on Android
+2. **Gemini CLI** — strong general-purpose option
+3. **OpenCode** — bundled coding assistant flow
+4. **Kilo Code** — optional
+5. **Mistral Vibe CLI** — optional
+6. **Codex** — optional
+7. **GitHub Copilot CLI** — optional
+
+> **Why this order?** Qwen and Gemini tend to be the most practical first picks for Termux users, while the others remain available for preference-based installs.
 
 ---
 
@@ -148,12 +183,26 @@ After installation, use the `oca` command for managing your installation:
 | `oca --version` | Show version |
 | `oca --help` | Show available options |
 
+For Gemini/Qwen repair on Termux, OCA also installs a helper manager:
+
+```bash
+python3 ~/.oca/scripts/termux_cli_manager.py --ensure-rg --patch-both --verify
+```
+
 **Update example:**
 ```bash
 oca --update && source ~/.bashrc
 ```
 
 This updates: OpenClaw core, code-server, OpenCode, AI CLI tools, Android patches
+
+**Quick verification after install:**
+```bash
+source ~/.bashrc
+oca --status
+brew --version
+go version
+```
 
 ---
 
@@ -282,7 +331,7 @@ curl -fsSL https://ollama.com/install.sh | sh
 | [🚀 Quick Start](docs/quickstart.mdx) | Get running in 5 minutes |
 | [📱 Phone Setup](docs/phone-setup.mdx) | Developer Options, Stay Awake, Battery |
 | [🔧 Installation](docs/installation.mdx) | Full 8-step installer breakdown |
-| [🤖 AI CLI Tools](docs/ai-cli-tools.mdx) | Qwen, Claude, Gemini, Codex setup |
+| [🤖 AI CLI Tools](docs/ai-cli-tools.mdx) | Qwen, Gemini, OpenCode, Kilo, Mistral Vibe, Codex, Copilot setup |
 | [🦙 Local LLM](docs/local-llm.mdx) | Run models locally (node-llama-cpp, Ollama) |
 | [🌐 Dashboard Connect](docs/dashboard-connect.mdx) | Multi-device management from PC |
 | [🔐 SSH Setup](docs/ssh-guide.mdx) | Remote access configuration |
@@ -398,7 +447,7 @@ OCA uses a **platform-plugin architecture** that separates platform-agnostic inf
 
 **OpenClaw Platform:** OpenClaw, clawdhub, PyYAML, libvips
 
-**Optional Tools (L3):** tmux, ttyd, dufs, android-tools, code-server, OpenCode, Claude Code, Gemini CLI, Codex CLI
+**Optional Tools (L3):** tmux, ttyd, dufs, android-tools, code-server, Qwen Code, Gemini CLI, OpenCode, Kilo Code, Mistral Vibe CLI, Codex CLI, GitHub Copilot CLI
 
 ---
 
