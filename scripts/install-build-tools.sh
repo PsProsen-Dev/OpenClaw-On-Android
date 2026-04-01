@@ -10,7 +10,7 @@ echo "=== RTX⚡2 — Installing Build Tools ==="
 echo ""
 
 PACKAGES=(
-    python=3.13.12
+    python
     make
     cmake
     clang
