@@ -3,7 +3,7 @@
 # Usage: curl -sL https://raw.githubusercontent.com/PsProsen-Dev/OpenClaw-On-Android/main/bootstrap.sh | bash
 set -euo pipefail
 
-REPO_TARBALL="https://github.com/PsProsen-Dev/OpenClaw-On-Android/archive/refs/heads/main.tar.gz"
+REPO_TARBALL="https://github.com/PsProsen-Dev/OpenClaw-On-Android/archive/refs/heads/master.tar.gz"
 INSTALL_DIR="$HOME/.oca/installer"
 
 RED='\033[0;31m'
