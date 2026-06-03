@@ -68,14 +68,27 @@ Configure Developer Options, Stay Awake, and battery optimization to prevent And
 Open Termux and run:
 
 ```bash
-pkg update -y && pkg install -y curl
+pkg update -y && pkg upgrade -y
+pkg install -y curl openssl libngtcp2 ca-certificates
 ```
+
+If Termux prints an error like `CANNOT LINK EXECUTABLE "curl"` or mentions
+`SSL_set_quic_tls_transport_params`, your Termux SSL/HTTP packages are out of
+sync. Re-run the two commands above, then start a fresh Termux session or run
+`hash -r` before installing OCA.
 
 #### Step 4: Install OCA 🚀
 
 ```bash
-curl -sL https://raw.githubusercontent.com/PsProsen-Dev/OpenClaw-On-Android/master/bootstrap.sh | bash && source ~/.bashrc
+BOOTSTRAP="${TMPDIR:-/tmp}/oca-bootstrap.sh"
+curl -fsSL https://raw.githubusercontent.com/PsProsen-Dev/OpenClaw-On-Android/master/bootstrap.sh -o "$BOOTSTRAP" \
+  && bash "$BOOTSTRAP" \
+  && [ -f "$HOME/.bashrc" ] && source "$HOME/.bashrc"
 ```
+
+This downloads the bootstrap script first instead of piping directly into
+`bash`, so a broken `curl` cannot accidentally run an empty installer and then
+try to source a missing `~/.bashrc`.
 
 Takes 3-10 minutes depending on network and device.
 
@@ -459,7 +472,9 @@ Using _Jarvis (RTX⚡)_
 ### 🚀 Ready to transform your Android phone?
 
 ```bash
-curl -sL https://raw.githubusercontent.com/PsProsen-Dev/OpenClaw-On-Android/master/bootstrap.sh | bash
+BOOTSTRAP="${TMPDIR:-/tmp}/oca-bootstrap.sh"
+curl -fsSL https://raw.githubusercontent.com/PsProsen-Dev/OpenClaw-On-Android/master/bootstrap.sh -o "$BOOTSTRAP" \
+  && bash "$BOOTSTRAP"
 ```
 
 **Your phone is now an AI server.** ⚡

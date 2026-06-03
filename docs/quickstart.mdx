@@ -33,11 +33,30 @@ OCA works with multiple free AI providers — no credit card needed to get start
 
 ## Step 1 — Run the bootstrap
 
-Open Termux and paste this single command:
+Open Termux and first refresh the packages that `curl` links against:
 
 ```bash
-curl -sL https://raw.githubusercontent.com/PsProsen-Dev/OpenClaw-On-Android/master/bootstrap.sh | bash && source ~/.bashrc
+pkg update -y && pkg upgrade -y
+pkg install -y curl openssl libngtcp2 ca-certificates
 ```
+
+If you see `CANNOT LINK EXECUTABLE "curl"` or
+`SSL_set_quic_tls_transport_params`, the Termux `curl`/OpenSSL packages are
+out of sync. Run the two commands above, then run `hash -r` or reopen Termux.
+
+Then paste this install command:
+
+```bash
+BOOTSTRAP="${TMPDIR:-/tmp}/oca-bootstrap.sh"
+curl -fsSL https://raw.githubusercontent.com/PsProsen-Dev/OpenClaw-On-Android/master/bootstrap.sh -o "$BOOTSTRAP" \
+  && bash "$BOOTSTRAP" \
+  && [ -f "$HOME/.bashrc" ] && source "$HOME/.bashrc"
+```
+
+This avoids the classic `curl | bash && source ~/.bashrc` trap: if `curl`
+fails before downloading anything, `bash` can otherwise receive empty input and
+return success, which makes the shell try to source a `.bashrc` that the
+installer never created.
 
 ---
 

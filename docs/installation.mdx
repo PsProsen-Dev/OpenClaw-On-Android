@@ -141,5 +141,8 @@ bash ~/.oca/scripts/install-nodejs.sh
 bash ~/.oca/platforms/openclaw/install.sh
 
 # Full reinstall
-oca --uninstall && curl -sL https://raw.githubusercontent.com/PsProsen-Dev/OpenClaw-On-Android/master/bootstrap.sh | bash
+oca --uninstall
+BOOTSTRAP="${TMPDIR:-/tmp}/oca-bootstrap.sh"
+curl -fsSL https://raw.githubusercontent.com/PsProsen-Dev/OpenClaw-On-Android/master/bootstrap.sh -o "$BOOTSTRAP" \
+  && bash "$BOOTSTRAP"
 ```
