@@ -28,10 +28,10 @@ It runs natively using a **glibc-based Node.js runtime** (the same approach as t
     Full step-by-step walkthrough for the `oca` installer.
   </Card>
   <Card title="AI CLI Tools" icon="brain" href="/docs/ai-cli-tools">
-    Claude Code, Gemini CLI, Qwen Code, Codex — all on your phone.
+    Configure supported cloud-connected AI CLIs on your phone.
   </Card>
-  <Card title="Local LLM" icon="microchip" href="/docs/local-llm">
-    Run LLM models locally via node-llama-cpp and Ollama.
+  <Card title="Cloud LLMs" icon="cloud" href="/docs/local-llm">
+    Connect OpenClaw to hosted models without running inference on the phone.
   </Card>
   <Card title="Troubleshooting" icon="bug" href="/docs/troubleshooting">
     Common errors and fixes for Termux + Android environments.
@@ -45,17 +45,21 @@ It runs natively using a **glibc-based Node.js runtime** (the same approach as t
 
 ## Why OCA?
 
-Your old Android phone is a powerful ARM64 server waiting to happen. OCA unlocks it:
+Your old Android phone is a powerful ARM64 orchestration server waiting to happen. OCA unlocks it:
 
 | Feature | Description |
 |---|---|
 | **RTX⚡1: Infra** | Optimized Termux environment (curl, git, wake-lock) |
 | **RTX⚡2: Engine** | Full Node.js linux-arm64 via glibc-bridge |
 | **RTX⚡3: Arsenal** | Chromium, Playwright, Go, Homebrew, & OpenCode |
-| **4 AI CLIs** | Qwen Code, Claude Code, Gemini CLI, Codex (All RTX⚡3) |
+| **Cloud AI CLIs** | Qwen Code, Gemini CLI, OpenCode, and compatible provider-backed tools |
 | **SSH remote access** | Built-in SSH server on port 8022 |
 | **Auto-start** | Termux:Boot integration for persistent 24/7 operation |
-| **One command install** | `curl ... | bash` and answer only the truly optional prompts |
+| **Safe bootstrap** | Downloads the bootstrap script before running it in Termux |
+
+<Warning>
+  OCA is a **cloud-inference** platform. Local LLM/model inference on the Android phone is not supported; the device runs the gateway, CLIs, and automation workload while hosted providers perform inference.
+</Warning>
 
 ---
 
@@ -72,11 +76,14 @@ Android Device (Termux)
         │
         ▼
   RTX⚡3: MASTER ARSENAL
-  ┌─────┴──────┐
-  │  AI CLIs   │  ◄── Claude, Qwen, Gemini, Codex
-  │  Gateway    │  ◄── OpenClaw core
-  │  Tools      │  ◄── Playwright, Homebrew, Go
-  └────────────┘
+  ┌─────┴─────────┐
+  │  AI CLIs      │  ◄── Qwen, Gemini, OpenCode, compatible tools
+  │  Gateway      │  ◄── OpenClaw core
+  │  Tools        │  ◄── Playwright, Homebrew, Go
+  └─────┬─────────┘
+        │
+        ▼
+  Cloud LLM Providers       ◄── inference runs off-device
 ```
 
 ---
@@ -91,4 +98,4 @@ Android Device (Termux)
 - **OS**: Android 10+ (Android 12+ requires [Phantom Process Killer fix](/docs/phantom-process-killer))
 - **App**: [Termux](https://f-droid.org/packages/com.termux/) from **F-Droid** (NOT Google Play — the Play version is outdated)
 - **Storage**: ~500MB free space
-- **Network**: Active internet connection during install
+- **Network**: Active internet connection during install and for cloud model inference
